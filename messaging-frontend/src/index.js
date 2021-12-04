@@ -6,16 +6,16 @@ import reportWebVitals from './reportWebVitals';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
 require('dotenv').config();
-
+console.log(process.env);
 const client = new ApolloClient({
-  uri: process.env.GRAPHQL_HOST,
+  uri: process.env.REACT_APP_GRAPHQL_HOST,
   cache: new InMemoryCache(),
 });
 
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <App />
+      <App host={process.env.REACT_APP_GRAPHQL_HOST} />
     </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root')
