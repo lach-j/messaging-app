@@ -1,7 +1,7 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 mongoose.Promise = global.Promise;
-mongoose.connect("mongodb://127.0.0.1:27017/network", {
+mongoose.connect('mongodb://127.0.0.1:27017/network', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -43,9 +43,10 @@ const messageSchema = new mongoose.Schema({
 const roomSchema = new mongoose.Schema({
   nicknames: [nicknameSchema],
   messages: [messageSchema],
+  title: String,
 });
 
-const Users = mongoose.model("users", userSchema);
-const Rooms = mongoose.model("rooms", roomSchema);
+const Users = mongoose.model('users', userSchema);
+const Rooms = mongoose.model('rooms', roomSchema);
 
 export { Users, Rooms };
