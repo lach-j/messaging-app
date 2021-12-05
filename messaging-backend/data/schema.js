@@ -1,5 +1,5 @@
-import { makeExecutableSchema } from "@graphql-tools/schema";
-import { resolvers } from "./resolvers.js";
+import { makeExecutableSchema } from '@graphql-tools/schema';
+import { resolvers } from './resolvers.js';
 
 const typeDefs = `
     type User {
@@ -19,6 +19,29 @@ const typeDefs = `
         state: String
         country: String
         postCode: String
+    }
+
+    type Nickname {
+        user_id: ID
+        nickname: String
+    }
+
+    type Reaction {
+        reaction: String
+        author: ID
+    }
+
+    type Message {
+        author: ID
+        timestamp: String
+        body: String
+        reactions: [Reaction]
+    }
+
+    type Room {
+        nicknames: [Nickname]
+        messages: [Message]
+        title: String
     }
 
     type Query {
