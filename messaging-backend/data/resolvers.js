@@ -62,6 +62,9 @@ export const resolvers = {
         body: input.body,
         reactions: [],
       });
+
+      newMessage.id = newMessage._id;
+
       return new Promise((resolve, reject) => {
         Rooms.findOneAndUpdate(
           { _id: room },
