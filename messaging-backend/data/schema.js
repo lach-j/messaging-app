@@ -32,6 +32,7 @@ const typeDefs = `
     }
 
     type Message {
+        _id: ID
         author: ID
         timestamp: String
         body: String
@@ -39,6 +40,7 @@ const typeDefs = `
     }
 
     type Room {
+        id: ID
         nicknames: [Nickname]
         messages: [Message]
         title: String
@@ -52,6 +54,8 @@ const typeDefs = `
             username: String,
             password: String,
             address: AddressInput): [User]
+        room(_id: ID,
+            title: String): [Room]
     }
 
     input UserInput {
@@ -72,8 +76,19 @@ const typeDefs = `
         postCode: String
     }
 
+    input RoomInput {
+        title: String
+    }
+
+    input MessageInput {
+        author: ID
+        body: String
+    }
+
     type Mutation {
         createUser(input: UserInput): User
+        createRoom(input: RoomInput): Room
+        addMessage(room: ID, input: MessageInput): Message
     }
 `;
 
