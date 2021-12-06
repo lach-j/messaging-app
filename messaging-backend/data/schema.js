@@ -32,7 +32,7 @@ const typeDefs = `
     }
 
     type Message {
-        _id: ID
+        id: ID
         author: ID
         timestamp: String
         body: String
