@@ -1,4 +1,3 @@
-import './App.css';
 import Messaging from './screens/messaging';
 
 function App() {

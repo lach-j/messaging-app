@@ -27,7 +27,7 @@ const Messaging = () => {
   }
 
   return (
-    <div>
+    <div className="flex">
       <Sidebar
         currRoom={currRoom}
         rooms={data?.room ? data.room : []}
