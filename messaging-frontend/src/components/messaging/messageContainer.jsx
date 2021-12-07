@@ -1,8 +1,10 @@
 import { useQuery, gql } from '@apollo/client';
-import React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import ActionsBar from './actionsBar';
 import RoomHeader from './roomHeader';
 
 const MessageContainer = ({ currRoom }) => {
+  const messageContainer = useRef(null);
   const { loading, error, data } = useQuery(
     gql`
       query FullRoomQuery($currRoom: ID!) {
@@ -28,15 +30,41 @@ const MessageContainer = ({ currRoom }) => {
     `,
     { variables: { currRoom } }
   );
+
+  const [messages, setMessages] = useState([]);
+  const handleLocalUpdate = (msg) => {
+    setMessages([...messages, msg]);
+    messageContainer.current.scrollTop = messageContainer.current.scrollHeight;
+  };
+  useEffect(() => {
+    if (data) setMessages(data.room[0].messages);
+  }, [data]);
+
+  useEffect(() => {
+    setTimeout(
+      () =>
+        (messageContainer.current.scrollTop =
+          messageContainer.current.scrollHeight),
+      1
+    );
+  }, [currRoom]);
   return (
-    <div>
-      <RoomHeader title={currRoom} />
-      <div>
-        {data &&
-          data.room[0].messages.map((message) => {
+    <div className="w-full h-screen flex flex-col">
+      <RoomHeader title={data ? data.room[0].title : 'Loading'} />
+      <div
+        ref={messageContainer}
+        style={{ scrollBehavior: 'smooth' }}
+        className="overflow-auto px-5 flex-grow"
+      >
+        {messages &&
+          messages.map((message) => {
             return <div key={message.id}>{message.body}</div>;
           })}
       </div>
+      <ActionsBar
+        currRoom={currRoom}
+        updateLocalMessages={(msg) => handleLocalUpdate(msg)}
+      />
     </div>
   );
 };
